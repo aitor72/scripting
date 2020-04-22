@@ -10,9 +10,16 @@ public float gotHayDestroyDelay; // 2
 private bool hitByHay; // 3
 
 
+public float dropDestroyDelay; // 1
+private Collider myCollider; // 2
+private Rigidbody myRigidbody; // 3
+
     // Start is called before the first frame update
     void Start()
     {
+
+    	myCollider = GetComponent<Collider>();
+myRigidbody = GetComponent<Rigidbody>();
         
     }
 
@@ -38,9 +45,20 @@ private void OnTriggerEnter(Collider other) // 1
     {
         Destroy(other.gameObject); // 3
         HitByHay(); // 4
-    }
+    } else if (other.CompareTag("DropSheep"))
+{
+    Drop();
+}
 
 
+}
+
+
+private void Drop()
+{
+    myRigidbody.isKinematic = false; // 1
+    myCollider.isTrigger = false; // 2
+    Destroy(gameObject, dropDestroyDelay); // 3
 }
 
 }
