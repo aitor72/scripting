@@ -14,6 +14,9 @@ public float dropDestroyDelay; // 1
 private Collider myCollider; // 2
 private Rigidbody myRigidbody; // 3
 
+private SheepSpawner sheepSpawner;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +36,8 @@ myRigidbody = GetComponent<Rigidbody>();
 
     private void HitByHay()
 {
+	sheepSpawner.RemoveSheepFromList(gameObject);
+
     hitByHay = true; // 1
     runSpeed = 0; // 2
 
@@ -56,10 +61,20 @@ private void OnTriggerEnter(Collider other) // 1
 
 private void Drop()
 {
+	sheepSpawner.RemoveSheepFromList(gameObject);
+
     myRigidbody.isKinematic = false; // 1
     myCollider.isTrigger = false; // 2
     Destroy(gameObject, dropDestroyDelay); // 3
 }
+
+
+public void SetSpawner(SheepSpawner spawner)
+{
+    sheepSpawner = spawner;
+}
+
+
 
 }
 
