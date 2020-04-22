@@ -8,6 +8,13 @@ public class Moving : MonoBehaviour
 	public float horizontalBoundary = 22;
 	public float movementSpeed = 50;
 
+	public GameObject hayBalePrefab; 
+	public Transform haySpawnpoint; 
+	 public float shootInterval; 
+	 private float shootTimer;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +25,7 @@ public class Moving : MonoBehaviour
     void Update()
     {
         UpdateMovement ();
+        UpdateShooting();
 
     }
 
@@ -33,4 +41,21 @@ else if (horizontalInput > 0 && transform.position.x < horizontalBoundary) // 2
  transform.Translate(transform.right * movementSpeed * Time.deltaTime);
  }
 }
+
+
+	 private void ShootHay()
+ {
+ Instantiate(hayBalePrefab, haySpawnpoint .position, Quaternion.identity);
+ }
+
+
+ private void UpdateShooting() {
+ shootTimer -= Time.deltaTime;
+ if (shootTimer <= 0 && Input.GetKey(KeyCode.Space)) {
+ shootTimer = shootInterval;
+ ShootHay();
+ }
+ }
+
+ 
 }
